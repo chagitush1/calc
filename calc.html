@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <title>super calc</title>
+        <style>
+
+            body{width:80%; margin:50px auto;}
+            .flex{display:flex;
+                    justify-content:space-evenly;}
+            .flex-col{display:flex;
+                    flex-direction:column;
+                    justify-content:space-evenly;}
+             .inputs > input {
+                 margin:5px 0;
+                 width:50px;
+                 border-radius:5px;
+             }  
+             .border{
+                 border:1px solid blue;
+             } 
+             .calc-buttons button:active{ width:25px;
+                
+             }    
+        </style>
+
+    </head>
+
+    <body>
+
+       <div class="content border flex-col">
+
+            <div class="3-boxes border flex">
+
+                <div class="inputs flex-col">
+                        <input id="n1"/>
+                        <input id="n2"/>
+                </div>
+
+                <div class="calc-buttons flex-col">
+                    <div class="flex">
+                        <button type="button" id="plus">+</button>
+                        <button type="button" id="minus">-</button>
+                    </div>
+                    
+                    <div class="flex">
+                        <button type="button" id="multiply">*</button>
+                        <button type="button" id="divide">/</button>
+                    </div>    
+                </div>
+
+                <div class="results flex-col">
+                    
+                </div>
+                    
+            </div>
+
+            <div class="table-wrapper">
+
+                    <table>
+                            <tr>
+                                <span class="ex"></span>
+                                <button type="button" id="edit">edit</button>
+                                <button type="button" id="edit">delete</button>
+                            </tr>
+                    </table>
+
+            </div>
+
+           
+       </div> 
+       
+
+       <script>
+
+           let btns = document.querySelectorAll('.calc-buttons button');
+
+           let aritmeticFn = e => {  /* הגדרת הפונקציה לתוך משתנה*/
+
+                let aritmetic = e.target.textContent;
+                let n1 = Number(document.querySelector('#n1').value);
+                let n2 = Number(document.querySelector('#n2').value);
+
+                let setRes = r => document.querySelector('.results').innerHTML = r
+
+                switch (aritmetic) {
+                    case'+': setRes (n1+n2); break;
+                    case'-': setRes (n1-n2); break;
+                    case'*': setRes (n1*n2); break;
+                    case'/': setRes (n1/n2); break;
+                }
+
+           }
+
+           
+
+
+           let ex = n1 + aritmetic + n2;
+           let row = `<div class="row"><span>${ex}</span><button onclick="edit(event)"></button>`
+           let t = document.querySelector('.table')
+           t.innerHTML += row;
+
+
+
+           btns.forEach( 
+               btn=> btn.onclick = aritmeticFn
+
+           )
+
+           function edit(e) {
+               let row =e.target.parentNode;
+               console.log('edit', e.target , row')
+               let s = row.querySelector('span');
+               let ex = s.textContent;
+               s.innerHTML = `<input value="${ex}"/>`;
+           }
+
+
+       </script>
+    </body>
+
+</html>
